@@ -12,8 +12,8 @@ import numpy as np
 from pathlib import Path
 import pickle
 
-from ..models.embeddings import embed_texts
-from ..config import FAISS_INDEX_DIR
+from school_in_a_box.models.embeddings import embed_texts
+from school_in_a_box.config import FAISS_INDEX_DIR
 
 
 class FAISSVectorStore:

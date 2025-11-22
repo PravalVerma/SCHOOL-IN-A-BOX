@@ -12,9 +12,10 @@ Image support (via vision model) will be added later.
 
 from typing import List
 
-from ..models.llm_client import LLMClient
-from ..config import LLM_MODEL_EXPLAINER
-from ..services.vector_store import store as vector_store
+from school_in_a_box.models.llm_client import LLMClient
+from school_in_a_box.config import LLM_MODEL_EXPLAINER
+from school_in_a_box.services.vector_store import store as vector_store
+
 
 
 # Single explainer LLM instance for this agent

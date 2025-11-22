@@ -23,7 +23,7 @@ from __future__ import annotations
 from typing import Any
 from pymongo import MongoClient, ASCENDING
 
-from ..config import MONGO_URI, MONGO_DB_NAME
+from school_in_a_box.config import MONGO_URI, MONGO_DB_NAME
 
 _client: MongoClient | None = None
 _db: Any | None = None

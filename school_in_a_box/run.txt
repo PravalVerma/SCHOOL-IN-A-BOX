@@ -1,0 +1,1 @@
+streamlit run school_in_a_box/app.py

@@ -31,8 +31,8 @@ OPENROUTER_BASE_URL: str = os.getenv(
     "https://openrouter.ai/api/v1",
 )
 
-MONGO_URI: str = os.getenv("MONGO_URI", "mongodb://localhost:27017")
-MONGO_DB_NAME: str = os.getenv("MONGO_DB_NAME", "school_in_a_box")
+MONGO_URI: str = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+MONGO_DB_NAME: str = os.getenv("MONGO_DB_NAME", "School In a Box")
 
 
 # --- Models & embeddings ---

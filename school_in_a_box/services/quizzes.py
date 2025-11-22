@@ -18,8 +18,9 @@ from datetime import datetime
 
 from bson import ObjectId
 
-from ..db.models import quizzes_col, responses_col
-from ..agents.quiz_generator import MCQ
+from school_in_a_box.db.models import quizzes_col, responses_col
+from school_in_a_box.agents.quiz_generator import MCQ
+
 
 
 # ---------- Helpers ----------
