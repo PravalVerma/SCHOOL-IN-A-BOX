@@ -16,8 +16,9 @@ from datetime import datetime
 
 from bson import ObjectId
 
-from school_in_a_box.db.models import quizzes_col, responses_col
-from school_in_a_box.agents.learning_coach import get_coaching_advice
+from db.models import quizzes_col, responses_col
+from agents.learning_coach import get_coaching_advice
+
 
 
 

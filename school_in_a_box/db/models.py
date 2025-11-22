@@ -23,7 +23,7 @@ from __future__ import annotations
 from typing import Any
 from pymongo import MongoClient, ASCENDING
 
-from school_in_a_box.config import MONGO_URI, MONGO_DB_NAME
+from config import MONGO_URI, MONGO_DB_NAME
 
 _client: MongoClient | None = None
 _db: Any | None = None
@@ -150,3 +150,6 @@ def init_indexes() -> None:
     responses_col().create_index([("quiz_id", ASCENDING)])
 
     progress_col().create_index([("user_id", ASCENDING)])
+
+
+print("🔗 Connected to Mongo:", MONGO_URI)

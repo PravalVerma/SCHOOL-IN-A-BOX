@@ -17,8 +17,9 @@ from pathlib import Path
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from school_in_a_box.config import CHUNK_SIZE, CHUNK_OVERLAP
-from school_in_a_box.services.vector_store import store as vector_store
+from config import CHUNK_SIZE, CHUNK_OVERLAP
+from services.vector_store import store as vector_store
+
 
 
 

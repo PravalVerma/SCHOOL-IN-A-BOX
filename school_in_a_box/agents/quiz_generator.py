@@ -14,9 +14,10 @@ from dataclasses import dataclass
 from typing import List, Optional
 import json
 
-from school_in_a_box.models.llm_client import LLMClient
-from school_in_a_box.config import LLM_MODEL_QUIZ, DEFAULT_NUM_QUESTIONS
-from school_in_a_box.services.vector_store import store as vector_store
+from models.llm_client import LLMClient
+from config import LLM_MODEL_QUIZ, DEFAULT_NUM_QUESTIONS
+from services.vector_store import store as vector_store
+
 
 
 _llm = LLMClient(model_name=LLM_MODEL_QUIZ)

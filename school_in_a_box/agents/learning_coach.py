@@ -18,8 +18,9 @@ from __future__ import annotations
 
 from typing import Dict, Any
 
-from school_in_a_box.models.llm_client import LLMClient
-from school_in_a_box.config import LLM_MODEL_COACH
+from models.llm_client import LLMClient
+from config import LLM_MODEL_COACH
+
 
 
 

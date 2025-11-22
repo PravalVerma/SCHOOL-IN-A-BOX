@@ -5,6 +5,8 @@ Central configuration for School in a Box.
 Everything that other modules need (API keys, model names, URIs, paths)
 should be defined here, so we don't scatter constants across the codebase.
 """
+from dotenv import load_dotenv
+load_dotenv()
 
 import os
 from pathlib import Path

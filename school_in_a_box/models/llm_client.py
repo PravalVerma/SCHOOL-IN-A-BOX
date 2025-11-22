@@ -9,10 +9,7 @@ directly, so we keep config + error handling in one place.
 from typing import List, Dict
 from openai import OpenAI
 
-from ..config import (
-    OPENROUTER_API_KEY,
-    OPENROUTER_BASE_URL,
-)
+from config import OPENROUTER_API_KEY, OPENROUTER_BASE_URL
 
 
 _client: OpenAI | None = None

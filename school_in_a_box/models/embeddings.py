@@ -13,7 +13,7 @@ from typing import List
 import numpy as np
 from sentence_transformers import SentenceTransformer
 
-from ..config import EMBEDDING_MODEL_NAME
+from config import EMBEDDING_MODEL_NAME
 
 _model: SentenceTransformer | None = None
 

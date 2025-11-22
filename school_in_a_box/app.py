@@ -3,13 +3,12 @@ from pathlib import Path
 
 import streamlit as st
 
-from school_in_a_box.db.models import init_indexes
-from school_in_a_box.services.ingestion import ingest_text, ingest_pdf
-from school_in_a_box.agents.explainer import explain_raw_text, explain_with_retrieval
-from school_in_a_box.agents.quiz_generator import generate_mcqs_with_retrieval, MCQ
-from school_in_a_box.services.quizzes import save_quiz, save_response, get_quiz_by_id
-from school_in_a_box.services.progress import compute_progress, get_coaching_for_user
-
+from db.models import init_indexes
+from services.ingestion import ingest_text, ingest_pdf
+from agents.explainer import explain_raw_text, explain_with_retrieval
+from agents.quiz_generator import generate_mcqs_with_retrieval, MCQ
+from services.quizzes import save_quiz, save_response, get_quiz_by_id
+from services.progress import compute_progress, get_coaching_for_user
 
 
 # ---------- One-time init ----------
