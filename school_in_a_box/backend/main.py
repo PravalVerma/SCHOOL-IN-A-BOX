@@ -4,6 +4,10 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Optional
 
+from backend.graphs import quiz_graph
+from agents.quiz_generator import MCQ  # already used for typing earlier
+from pydantic import BaseModel
+from typing import List, Optional
 from services.ingestion import ingest_text
 from agents.explainer import explain_raw_text, explain_with_retrieval
 from agents.quiz_generator import generate_mcqs_with_retrieval, MCQ
@@ -101,22 +105,30 @@ def explain_rag_endpoint(req: ExplainRagRequest):
 
 @app.post("/quiz/generate", response_model=dict)
 def generate_quiz_endpoint(req: GenerateQuizRequest):
-    mcqs: List[MCQ] = generate_mcqs_with_retrieval(
-        topic_or_question=req.topic_or_question,
-        num_questions=req.num_questions,
-        difficulty=req.difficulty,
-        k=req.k,
+    """
+    Quiz generation is now orchestrated by a LangGraph:
+
+    START -> generate_mcqs_node -> save_quiz_node -> END
+    """
+    # Run the LangGraph with our input state
+    state = quiz_graph.invoke(
+        {
+            "user_id": req.user_id,
+            "topic_or_question": req.topic_or_question,
+            "source_id": req.source_id,
+            "num_questions": req.num_questions,
+            "difficulty": req.difficulty,
+            "k": req.k,
+        }
     )
-    if not mcqs:
+
+    quiz_id = state.get("quiz_id")
+    mcqs: List[MCQ] = state.get("mcqs", []) or []
+
+    if not quiz_id or not mcqs:
         return {"quiz_id": None, "mcqs": []}
 
-    quiz_id = save_quiz(
-        user_id=req.user_id,
-        topic=req.topic_or_question,
-        source_id=req.source_id,
-        mcqs=mcqs,
-    )
-
+    # Convert MCQ dataclasses to API-friendly Pydantic objects
     mcq_payload = [
         MCQResponse(
             question=m.question,
