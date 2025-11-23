@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List, Optional
 
-from backend.graphs import quiz_graph
+from backend.graphs import quiz_graph, coach_graph, explain_graph
 from agents.quiz_generator import MCQ  # already used for typing earlier
 from pydantic import BaseModel
 from typing import List, Optional
@@ -12,7 +12,6 @@ from services.ingestion import ingest_text
 from agents.explainer import explain_raw_text, explain_with_retrieval
 from agents.quiz_generator import generate_mcqs_with_retrieval, MCQ
 from services.quizzes import save_quiz, save_response, get_quiz_by_id
-from services.progress import compute_progress, get_coaching_for_user
 from db.models import init_indexes
 
 
@@ -95,11 +94,19 @@ def explain_raw_endpoint(req: ExplainRawRequest):
 
 @app.post("/explain/rag")
 def explain_rag_endpoint(req: ExplainRagRequest):
-    explanation = explain_with_retrieval(
-        question=req.question,
-        level=req.level,
-        k=req.k,
+    """
+    Explanation via LangGraph:
+
+    START -> retrieve_context_node -> generate_explanation_node -> END
+    """
+    state = explain_graph.invoke(
+        {
+            "question": req.question,
+            "level": req.level,
+            "k": req.k,
+        }
     )
+    explanation = state.get("explanation", "")
     return {"explanation": explanation}
 
 
@@ -170,6 +177,14 @@ def get_quiz_endpoint(quiz_id: str):
 
 @app.post("/coach/advice")
 def coaching_endpoint(req: CoachingRequest):
-    advice = get_coaching_for_user(req.user_id)
-    stats = compute_progress(req.user_id)
-    return {"advice": advice, "progress": stats}
+    """
+    Coaching flow orchestrated by LangGraph:
+
+    START -> compute_progress_node -> coaching_node -> END
+    """
+    state = coach_graph.invoke({"user_id": req.user_id})
+
+    progress = state.get("progress", {})
+    advice = state.get("advice", "")
+
+    return {"advice": advice, "progress": progress}
