@@ -1,7 +1,4 @@
-# agents/quiz_generator.py
 """
-Quiz Generator Agent.
-
 Responsibilities:
 - Generate MCQs from given content (text-based).
 - Optionally, use retrieved context from the vector store given a topic/question.

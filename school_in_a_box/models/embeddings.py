@@ -1,4 +1,4 @@
-# models/embeddings.py
+
 """
 Embedding utilities for School in a Box.
 

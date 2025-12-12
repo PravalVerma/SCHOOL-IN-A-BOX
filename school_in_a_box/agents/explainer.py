@@ -1,12 +1,3 @@
-# agents/explainer.py
-"""
-Content Explainer Agent.
-
-Responsibilities:
-- Explain raw text in a student-friendly way.
-- Explain using retrieved context from the vector store (RAG-style).
-"""
-
 from typing import List
 
 from models.llm_client import LLMClient
@@ -18,9 +9,7 @@ _llm = LLMClient(model_name=LLM_MODEL_EXPLAINER)
 
 
 def _build_explainer_prompt(content: str, level: str) -> str:
-    """
-    Build the prompt for explaining content.
-    """
+
     return f"""
 You are a friendly teaching assistant.
 
@@ -37,9 +26,7 @@ Content to explain:
 
 
 def explain_raw_text(text: str, level: str = "simple") -> str:
-    """
-    Explain text directly (no retrieval).
-    """
+
     prompt = _build_explainer_prompt(text, level)
     messages = [
         {"role": "system", "content": "You explain concepts clearly for students."},

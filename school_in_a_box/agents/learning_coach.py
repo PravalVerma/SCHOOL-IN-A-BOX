@@ -1,6 +1,4 @@
-# agents/learning_coach.py
-"""
-Learning Coach Agent.
+"""""
 
 Responsibilities:
 - Take a summary of learner performance (from Mongo / progress service).

@@ -1,4 +1,4 @@
-# services/progress.py
+
 """
 Progress & stats service.
 

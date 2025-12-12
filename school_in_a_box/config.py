@@ -1,4 +1,4 @@
-# config.py
+
 """
 Central configuration for School in a Box.
 

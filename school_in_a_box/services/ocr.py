@@ -1,4 +1,4 @@
-# services/ocr.py
+
 """
 OCR utilities for School in a Box.
 

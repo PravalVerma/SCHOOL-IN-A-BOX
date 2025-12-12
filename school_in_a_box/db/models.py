@@ -1,4 +1,3 @@
-# db/models.py
 """
 MongoDB connection and collection helpers for School in a Box.
 

@@ -1,4 +1,4 @@
-# services/vector_store.py
+
 """
 FAISS vector store wrapper.
 
