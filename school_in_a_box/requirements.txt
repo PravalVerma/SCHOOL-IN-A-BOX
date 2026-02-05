@@ -4,3 +4,4 @@ langgraph
 pymongo 
 python-dotenv
 pytesseract
+Pillow

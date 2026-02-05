@@ -68,9 +68,53 @@ def get_coaching_advice(progress_summary: Dict[str, Any]) -> str:
     Output:
         A natural language coaching message for the student.
     """
+
     prompt = _build_coach_prompt(progress_summary)
+
     messages = [
         {"role": "system", "content": "You are a kind and practical learning coach."},
         {"role": "user", "content": prompt},
     ]
-    return _llm.chat(messages)
+
+    try:
+        # Try LLM first
+        return _llm.chat(messages)
+
+    except Exception as e:
+        # Fallback logic if rate limit or API failure occurs
+        total_q = progress_summary.get("total_questions", 0)
+        correct = progress_summary.get("correct_answers", 0)
+
+        accuracy = 0
+        if total_q > 0:
+            accuracy = int((correct / total_q) * 100)
+
+        topic_stats = progress_summary.get("topic_stats", {})
+
+        weak_topics = []
+        for topic, stats in topic_stats.items():
+            total = stats.get("total", 0)
+            correct_t = stats.get("correct", 0)
+
+            if total > 0:
+                mastery = correct_t / total
+                if mastery < 0.6:
+                    weak_topics.append(topic)
+
+        advice = (
+            "AI coaching is temporarily unavailable (rate limit reached).\n\n"
+            f"Your current accuracy is {accuracy}%.\n"
+        )
+
+        if weak_topics:
+            advice += (
+                "You should focus on revising these topics:\n"
+                + ", ".join(weak_topics)
+                + ".\n"
+            )
+        else:
+            advice += "Continue practicing regularly to improve retention.\n"
+
+        advice += "\nTip: Practice weak topics first, then review strong ones after a few days."
+
+        return advice

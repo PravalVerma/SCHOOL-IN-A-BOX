@@ -43,9 +43,9 @@ MONGO_DB_NAME: str = os.getenv("MONGO_DB_NAME", "School In a Box")
 EMBEDDING_MODEL_NAME: str = "sentence-transformers/all-MiniLM-L6-v2"
 
 # Core LLMs (we can keep them same for now and specialize later if needed)
-LLM_MODEL_EXPLAINER: str = "stepfun/step-3.5-flash:free"
-LLM_MODEL_QUIZ: str = "stepfun/step-3.5-flash:free"
-LLM_MODEL_COACH: str = "stepfun/step-3.5-flash:free"
+LLM_MODEL_EXPLAINER: str = "arcee-ai/trinity-large-preview:free"
+LLM_MODEL_QUIZ: str = "arcee-ai/trinity-large-preview:free"
+LLM_MODEL_COACH: str = "arcee-ai/trinity-large-preview:free"
 
 # --- Vector store selection ---
 

@@ -15,6 +15,11 @@ import pickle
 from models.embeddings import embed_texts
 from config import FAISS_INDEX_DIR
 
+from config import FAISS_INDEX_DIR
+import os
+
+os.makedirs(FAISS_INDEX_DIR, exist_ok=True)
+
 
 
 class FAISSVectorStore:
