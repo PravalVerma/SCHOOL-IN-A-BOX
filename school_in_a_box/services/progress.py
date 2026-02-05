@@ -61,12 +61,16 @@ def compute_progress(user_id: str) -> Dict[str, Any]:
     if not responses:
         # No data yet – return an "empty" summary
         return {
-            "user_id": user_id,
-            "overall_accuracy": 0.0,
-            "total_questions_answered": 0,
-            "topics": [],
-            "recent_sessions": [],
+        "user_id": user_id,
+        "overall_accuracy": 0.0,
+        "total_questions": 0,
+        "correct_answers": 0,
+        "total_quizzes": 0,
+        "topic_stats": {},
+        "topics": [],
+        "recent_sessions": [],
         }
+
 
     # 2. Collect quiz_ids and fetch quiz docs (for topics)
     quiz_ids = {r["quiz_id"] for r in responses if isinstance(r.get("quiz_id"), ObjectId)}
@@ -165,13 +169,28 @@ def compute_progress(user_id: str) -> Dict[str, Any]:
     # 6. Overall accuracy
     overall_accuracy = total_correct / max(total_answers, 1)
 
+    # Build topic_stats in UI-friendly format
+    topic_stats_ui = {}
+    for t in topics_list:
+        topic_stats_ui[t["name"]] = {
+            "total": t["num_questions"],
+            "correct": int(t["accuracy"] * t["num_questions"]),
+        }
+
+    # Calculate total quizzes
+    total_quizzes = len(recent_sessions)
+
     return {
         "user_id": user_id,
         "overall_accuracy": overall_accuracy,
-        "total_questions_answered": total_answers,
+        "total_questions": total_answers,
+        "correct_answers": total_correct,
+        "total_quizzes": total_quizzes,
+        "topic_stats": topic_stats_ui,
         "topics": topics_list,
         "recent_sessions": recent_sessions,
     }
+
 
 
 def get_coaching_for_user(user_id: str) -> str:
