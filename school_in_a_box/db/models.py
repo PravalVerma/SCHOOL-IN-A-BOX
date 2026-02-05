@@ -24,8 +24,18 @@ from pymongo import MongoClient, ASCENDING
 
 from config import MONGO_URI, MONGO_DB_NAME
 
-_client: MongoClient | None = None
-_db: Any | None = None
+
+
+_client = MongoClient(
+    MONGO_URI,
+    serverSelectionTimeoutMS=5000,
+    connectTimeoutMS=10000,
+)
+
+_db = _client[MONGO_DB_NAME]
+
+
+
 
 
 def get_client() -> MongoClient:
