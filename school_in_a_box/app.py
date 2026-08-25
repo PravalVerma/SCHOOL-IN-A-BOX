@@ -7,7 +7,7 @@ from services.ingestion import ingest_pdf
 from services.ocr import extract_text_from_image
 from services.users import ensure_user, get_all_user_ids
 
-BACKEND_URL = "http://localhost:8000"
+BACKEND_URL = "http://localhost:8001"
 # @st.cache_data(ttl=300)
 @st.cache_data(ttl=60)
 def fetch_coach_data(user_id):
@@ -259,24 +259,34 @@ with tab_learn:
     if explain_mode == "Explain pasted text":
         text = st.text_area("Text to explain")
         if st.button("Explain"):
-            resp = requests.post(
-                f"{BACKEND_URL}/explain/raw",
-                json={"text": text, "level": level},
-                timeout=120,
-            )
-            st.success("Explanation generated")
-            st.write(resp.json().get("explanation",""))
+            with st.spinner("Generating explanation..."):
+                resp = requests.post(
+                    f"{BACKEND_URL}/explain/raw",
+                    json={"text": text, "level": level},
+                    timeout=120,
+                )
+                if resp.status_code == 200:
+                    st.success("Explanation generated")
+                    st.write(resp.json().get("explanation",""))
+                else:
+                    st.error(f"Failed to generate explanation. Backend returned {resp.status_code}.")
+                    st.write(resp.text)
 
     else:
         question = st.text_input("Ask a question")
         if st.button("Explain from material"):
-            resp = requests.post(
-                f"{BACKEND_URL}/explain/rag",
-                json={"question": question, "level": level, "k": 5},
-                timeout=120,
-            )
-            st.success("Explanation generated")
-            st.write(resp.json().get("explanation",""))
+            with st.spinner("Generating explanation..."):
+                resp = requests.post(
+                    f"{BACKEND_URL}/explain/rag",
+                    json={"question": question, "level": level, "k": 5},
+                    timeout=120,
+                )
+                if resp.status_code == 200:
+                    st.success("Explanation generated")
+                    st.write(resp.json().get("explanation",""))
+                else:
+                    st.error(f"Failed to generate explanation. Backend returned {resp.status_code}.")
+                    st.write(resp.text)
 
 
 # ================= QUIZ TAB =================
@@ -453,7 +463,6 @@ with tab_coach:
 
         except Exception as e:
             st.error(f"Error fetching coaching report: {e}")
-
 
 
 st.divider()

@@ -2,10 +2,10 @@ Frontend:
 streamlit run school_in_a_box/app.py
 
 Backend:
-uvicorn backend.main:app --reload
+uvicorn backend.main:app --reload --port 8001
 
 By default this serves at:
 
-http://127.0.0.1:8000
+http://127.0.0.1:8001
 
-Docs at http://127.0.0.1:8000/docs
+Docs at http://127.0.0.1:8001/docs

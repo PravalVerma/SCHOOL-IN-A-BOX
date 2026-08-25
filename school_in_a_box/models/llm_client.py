@@ -55,11 +55,14 @@ class LLMClient:
         max_tokens: int | None = None,
     ) -> str:
         client = _get_client()
-        resp = client.chat.completions.create(
-            model=self.model_name,
-            messages=messages,
-            temperature=temperature,
-            max_tokens=max_tokens,
-        )
+        kwargs = {
+            "model": self.model_name,
+            "messages": messages,
+            "temperature": temperature,
+        }
+        if max_tokens is not None:
+            kwargs["max_tokens"] = max_tokens
+            
+        resp = client.chat.completions.create(**kwargs)
         # OpenAI v1-style client; choices[0].message.content is a string
         return resp.choices[0].message.content or ""

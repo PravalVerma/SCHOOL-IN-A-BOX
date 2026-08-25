@@ -67,8 +67,6 @@ OUTPUT FORMAT:
 Return a JSON-style list of objects (no markdown).
 """.strip()
 
-
-
 def _parse_mcq_json(raw: str, difficulty: str) -> List[MCQ]:
     """
     Parse the model's JSON output into a list of MCQ objects.
